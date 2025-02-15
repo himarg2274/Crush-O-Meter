@@ -4,74 +4,106 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Love Poem Generator 💕</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background: linear-gradient(to bottom, #ffdde1, #ee9ca7);
-            font-family: 'Quicksand', sans-serif;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(-45deg, #ff69b4, #ff1493, #ff69b4, #ff1493);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
             text-align: center;
-            padding: 20px;
-            color: #4a2c2a;
+            color: #fff;
+            min-height: 100vh;
+            padding: 40px 20px;
+            position: relative;
+            overflow-x: hidden;
         }
 
         .container {
-            background: #fff0f3;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-            max-width: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px 20px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 450px;
             margin: auto;
+            text-align: center;
+            animation: fadeIn 0.5s ease-out;
         }
 
         .title {
-            font-size: 28px;
-            color: #d63384;
+            font-size: clamp(32px, 5vw, 40px);
             font-weight: bold;
-            text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        .subtitle {
-            font-size: 16px;
-            color: #6c757d;
-            margin-bottom: 15px;
+            font-family: 'Dancing Script', cursive;
+            color: #fff;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.2);
+            animation: pulse 2s infinite;
         }
 
         label {
             font-weight: 600;
-            color: #4a2c2a;
+            display: block;
+            margin: 10px 0 5px;
         }
 
         input {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 2px solid #f8a5c2;
-            border-radius: 8px;
-            font-size: 16px;
-        }
-
-        button {
-            background: #ff6b81;
-            color: white;
-            padding: 12px 20px;
+            padding: 12px;
             border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
+            border-radius: 10px;
+            font-size: 16px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            color: #ff1493;
             transition: 0.3s ease;
         }
 
+        input:focus {
+            background: #fff;
+        }
+
+        button {
+            background: #fff;
+            color: #ff1493;
+            font-size: 18px;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
         button:hover {
-            background: #ff4081;
-            transform: scale(1.05);
+            transform: translateY(-3px);
+            background: #ff1493;
+            color: #fff;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
         #poemResult {
-            background: #fff;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-top: 20px;
             display: none;
         }
@@ -80,20 +112,57 @@
             display: inline-block;
             margin-top: 15px;
             text-decoration: none;
-            color: #ff4081;
+            color: #fff;
             font-weight: bold;
             transition: 0.3s;
+            font-size: 18px;
         }
 
         .back-button:hover {
-            color: #ff4081;
+            color: #ff1493;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: clamp(20px, 4vw, 30px);
+            pointer-events: none;
+            z-index: 1;
+            animation: floatUp 4s ease-in infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="title">💖 AI Love Poem Generator 💖</h1>
-        <p class="subtitle">Describe your crush, and let AI create a beautiful poem! ✨</p>
+        <h1 class="title animate__animated animate__bounceIn">💖 AI Love Poem Generator 💖</h1>
+        <p class="subtitle animate__animated animate__fadeIn">Describe your crush, and let AI create a beautiful poem! ✨</p>
         
         <form id="poemForm">
             <label for="crushName">Crush's Name:</label>
@@ -110,10 +179,24 @@
             <p id="poemText"></p>
         </div>
 
-        <a href="/features" class="back-button">⬅ Back to Features</a>
+        <a href="/features" class="back-button animate__animated animate__pulse">⬅ Back to Features</a>
     </div>
 
     <script>
+        function createHeart() {
+            const heart = document.createElement("div");
+            const hearts = ["❤️", "💖", "💕", "💗", "💓", "💝"];
+            heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+            heart.classList.add("floating-heart");
+            heart.style.left = Math.random() * window.innerWidth + "px";
+            heart.style.transform = `scale(${Math.random() * 0.5 + 0.5})`;
+            document.body.appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 4000);
+        }
+        
+        setInterval(createHeart, 600);
+
         document.getElementById("poemForm").addEventListener("submit", async function(event) {
             event.preventDefault();
 
@@ -127,7 +210,6 @@
                 return;
             }
 
-            // Send data to backend
             let response = await fetch("/generate_poem", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -135,7 +217,7 @@
             });
 
             let data = await response.json();
-            poemText.innerHTML = data.poem ? `<pre>${data.poem}</pre>` : "AI couldn't generate a poem. Try a different theme!";
+            poemText.innerHTML = data.poem ? `<pre>${data.poem}</pre>` : "AI couldn't generate a poem. Try again!";
             poemResult.style.display = "block";
         });
     </script>
