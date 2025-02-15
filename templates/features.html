@@ -4,210 +4,224 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Features - Love-O-Tron 3000 ❤️</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
     <style>
-     body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #ffb6c1, #ff69b4, #ff1493);
-    text-align: center;
-    color: #fff;
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    position: relative;
-    overflow: hidden;
-}
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-.container {
-    max-width: 500px;
-    background: rgba(255, 20, 147, 0.2);
-    color: #fff;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(255, 20, 147, 0.3);
-    backdrop-filter: blur(10px);
-}
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(-45deg, #ff69b4, #ff1493, #ff69b4, #ff1493);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            text-align: center;
+            color: #fff;
+            min-height: 100vh;
+            padding: 40px 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
 
-.title {
-    font-size: 32px;
-    font-weight: bold;
-    font-family: 'Dancing Script', cursive;
-    color: #ffe4e1;
-    text-shadow: 3px 3px 12px rgba(255, 20, 147, 0.5);
-}
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-.subtitle {
-    font-size: 18px;
-    color: #ffecf2;
-    text-shadow: 2px 2px 10px rgba(255, 105, 180, 0.6);
-}
+        .header {
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-out;
+        }
 
-.match-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-}
+        .title {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: bold;
+            font-family: 'Dancing Script', cursive;
+            color: #fff;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.2);
+            animation: pulse 2s infinite;
+        }
 
-.input-container {
-    width: 100%;
-    text-align: left;
-}
+        .subtitle {
+            font-size: clamp(18px, 2.5vw, 22px);
+            color: #fff;
+            text-shadow: 2px 2px 10px rgba(255, 105, 180, 0.6);
+        }
 
-label {
-    font-weight: bold;
-    color: #ffe4e1;
-    display: block;
-    margin-bottom: 5px;
-}
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            padding: 0 10px;
+        }
 
-input {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 2px solid rgba(255, 105, 180, 0.5);
-    border-radius: 8px;
-    outline: none;
-    transition: 0.3s;
-    background: rgba(255, 20, 147, 0.2);
-    color: #fff;
-}
+        .feature-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px 20px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 120px;
+            text-align: center;
+            animation: fadeIn 0.5s ease-out;
+        }
 
-input::placeholder {
-    color: rgba(255, 255, 255, 0.7);
-}
+        .feature-box:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
 
-input:focus {
-    border-color: #ff1493;
-    box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
-}
+        .feature-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
 
-/* Glassy Button */
-.btn {
-    background: rgba(255, 255, 255, 0.15);
-    color: #fff;
-    font-size: 18px;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: 0.3s;
-    font-weight: bold;
-    box-shadow: 0 6px 15px rgba(255, 20, 147, 0.3);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-}
+        .feature-box:hover::before {
+            left: 100%;
+        }
 
-.btn:hover {
-    background: rgba(255, 255, 255, 0.25);
-    transform: scale(1.1);
-    box-shadow: 0 8px 20px rgba(255, 20, 147, 0.5);
-}
+        .btn {
+            background: #fff;
+            color: #ff1493;
+            font-size: 18px;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
 
-/* Glassy Result Box */
-.result-box {
-    background: rgba(255, 20, 147, 0.2);
-    color: #ff69b4;
-    font-size: 22px;
-    padding: 15px;
-    border-radius: 10px;
-    margin-top: 15px;
-    font-weight: bold;
-    display: none;
-    animation: heartbeat 1s infinite alternate;
-    backdrop-filter: blur(10px);
-}
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            background: #ff1493;
+            color: #fff;
+        }
 
-@keyframes heartbeat {
-    0% { transform: scale(1); }
-    100% { transform: scale(1.1); }
-}
+        .floating-heart {
+            position: absolute;
+            font-size: clamp(20px, 4vw, 30px);
+            pointer-events: none;
+            z-index: 1;
+            animation: floatUp 4s ease-in infinite;
+        }
 
-/* Love Quote Styling */
-.quote-box {
-    margin-top: 20px;
-    padding: 15px;
-    text-align: center;
-    font-size: 18px;
-    font-weight: bold;
-    border-radius: 10px;
-    display: none;
-    transition: 0.5s ease-in-out;
-    color: #fff;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-}
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
-/* Color themes based on love percentage */
-.quote-high { background: rgba(255, 20, 147, 0.4); }
-.quote-good { background: rgba(255, 105, 180, 0.4); }
-.quote-mid { background: rgba(255, 182, 193, 0.4); color: #6a0572; }
-.quote-low { background: rgba(255, 228, 225, 0.4); color: #ff1493; }
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
 
-/* Floating Hearts */
-.heart {
-    position: absolute;
-    color: #ff69b4;
-    font-size: 30px;
-    animation: floatUp 3s infinite linear;
-    opacity: 0.6;
-}
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
 
-@keyframes floatUp {
-    0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(-100vh); opacity: 0; }
-}
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-/* Glassy Back Button */
-.back-btn {
-    display: inline-block;
-    margin-top: 15px;
-    color: #fff;
-    text-decoration: none;
-    font-size: 16px;
-    background: rgba(255, 255, 255, 0.15);
-    padding: 10px 20px;
-    border-radius: 10px;
-    transition: 0.3s;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-}
-
-.back-btn:hover {
-    background: rgba(255, 255, 255, 0.25);
-    transform: scale(1.05);
-}
-
-
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 15px;
+            }
+            
+            .feature-box {
+                min-height: 100px;
+                padding: 20px 15px;
+                font-size: 16px;
+            }
+        }
     </style>
 </head>
 <body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title animate__animated animate__bounceIn">✨ Explore Our Cringey Features ✨</h1>
+            <p class="subtitle animate__animated animate__fadeIn">Choose a fun love-powered feature!</p>
+        </div>
 
-    <div class="header">
-        <h1 class="title">✨ Explore Our Cringey Features ✨</h1>
-        <p class="subtitle">Choose a fun love-powered feature!</p>
+        <div class="grid">
+            <a href="/poem" class="feature-box animate__animated animate__fadeIn">Generate a Love Poem 💕</a>
+            <a href="/loveletter" class="feature-box animate__animated animate__fadeIn">Love Letter Creator 💌</a>
+            <a href="/pickup" class="feature-box animate__animated animate__fadeIn">Cringe Pickup Lines 🤡</a>
+            <a href="/match" class="feature-box animate__animated animate__fadeIn">Face Match 🔥</a>
+            <a href="/aimatch" class="feature-box animate__animated animate__fadeIn">Name Match Percentage ❤️‍🔥</a>
+            <a href="#" class="feature-box animate__animated animate__fadeIn">Crush Message Analysis 💬🔍</a>
+            <a href="#" class="feature-box animate__animated animate__fadeIn">Ship or Skip 💖🔢</a>
+            <a href="#" class="feature-box animate__animated animate__fadeIn">Love Puzzle Game 🧩💕</a>
+            <a href="/bot" class="feature-box animate__animated animate__fadeIn">Partner Bot 🤖💑</a>
+            <a href="#" class="feature-box animate__animated animate__fadeIn">Relive Your Cringe Moments 😳😂</a>
+            <a href="#" class="feature-box animate__animated animate__fadeIn">Future Child 👶🔮</a>
+            <a href="/respond" class="feature-box animate__animated animate__fadeIn">What to Respond Next 🤔💬</a>
+        </div>
+
+        <a href="/" class="btn animate__animated animate__pulse">⬅ Back to Home</a>
     </div>
 
-    <div class="grid">
-        <a href="/poem" class="feature-box">Generate a Love Poem 💕</a>
-        <a href="/loveletter" class="feature-box">Love Letter Creator 💌</a>
-        <a href="/pickup" class="feature-box">Cringe Pickup Lines 🤡</a>
-        <a href="/match" class="feature-box">Face Match🔥</a>
-        <a href="/aimatch" class="feature-box">Name Match Percentage ❤️‍🔥</a>
-        <a href="#" class="feature-box">Crush Message Analysis 💬🔍</a>
-        <a href="#" class="feature-box">Ship or skip💖🔢</a>
-        <a href="#" class="feature-box">Love Puzzle Game 🧩💕</a>
-        <a href="/bot" class="feature-box">Partner Bot 🤖💑</a>
-        <a href="#" class="feature-box">Relive Your Cringe Moments 😳😂</a>
-        <a href="#" class="feature-box">Future Child 👶🔮</a>
-        <a href="/respond" class="feature-box">What to Respond Next 🤔💬</a>
-    </div>
-
-    <a href="/" class="btn">⬅ Back to Home</a>
-
+    <script>
+        function createHeart() {
+            const heart = document.createElement("div");
+            const hearts = ["❤️", "💖", "💕", "💗", "💓", "💝"];
+            heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+            heart.classList.add("floating-heart");
+            heart.style.left = Math.random() * window.innerWidth + "px";
+            heart.style.transform = scale(${Math.random() * 0.5 + 0.5});
+            document.body.appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 4000);
+        }
+        
+        setInterval(createHeart, 600);
+    </script>
 </body>
-</html>
+</html> 
