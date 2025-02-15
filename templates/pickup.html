@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cringe Pickup Line Generator 🤡💕</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            text-align: center;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: #fff;
+            color: #333;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .title {
+            font-size: 26px;
+            font-weight: bold;
+            color: #ff4081;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        .btn {
+            background: #ff4081;
+            color: #fff;
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: #e91e63;
+            transform: scale(1.05);
+        }
+
+        .line-box {
+            display: none;
+            background: #ffe6eb;
+            color: #ff4081;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="title">🤡 Cringe Pickup Line Generator 💕</h1>
+        <p class="subtitle">Click the button to get a ridiculously cringey pickup line!</p>
+
+        <button class="btn" id="generateLine">Generate Pickup Line 💖</button>
+
+        <div id="lineBox" class="line-box">
+            <p id="pickupLine"></p>
+        </div>
+
+        <a href="/features" class="btn">⬅ Back to Features</a>
+    </div>
+
+    <script>
+        document.getElementById("generateLine").addEventListener("click", async function() {
+            let lineBox = document.getElementById("lineBox");
+            let pickupLine = document.getElementById("pickupLine");
+
+            // Fetch pickup line from backend
+            let response = await fetch("/generate_pickup");
+            let data = await response.json();
+
+            // Show pickup line
+            pickupLine.innerText = data.line;
+            lineBox.style.display = "block";
+        });
+    </script>
+
+</body>
+</html>

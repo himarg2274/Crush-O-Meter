@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Love Letter Generator 💌</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            text-align: center;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: #fff;
+            color: #333;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .title {
+            font-size: 26px;
+            font-weight: bold;
+            color: #ff4081;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        label {
+            font-weight: bold;
+            color: #ff4081;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ff4081;
+            border-radius: 8px;
+            outline: none;
+            transition: 0.3s;
+            margin-bottom: 15px;
+        }
+
+        input:focus {
+            border-color: #ff669a;
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+        }
+
+        .btn {
+            background: #ff4081;
+            color: #fff;
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: #e91e63;
+            transform: scale(1.05);
+        }
+
+        .letter-box {
+            display: none;
+            background: #ffe6eb;
+            color: #ff4081;
+            font-size: 18px;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-family: 'Dancing Script', cursive;
+            text-align: left;
+            line-height: 1.5;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .loading-text {
+            display: none;
+            font-size: 20px;
+            color: #ff4081;
+            margin-top: 20px;
+        }
+
+        .floating-heart {
+            position: absolute;
+            color: #ff4081;
+            font-size: 20px;
+            animation: float 2s infinite;
+            opacity: 0;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-50px); opacity: 0; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="title">💌 AI Love Letter Generator 💌</h1>
+        <p class="subtitle">Enter your details, and let AI craft the perfect love letter!</p>
+
+        <form id="letterForm">
+            <label for="yourName">Your Name:</label>
+            <input type="text" id="yourName" name="yourName" placeholder="Enter your name..." required>
+
+            <label for="crushName">Crush's Name:</label>
+            <input type="text" id="crushName" name="crushName" placeholder="Enter their name..." required>
+
+            <label for="traits">Describe them in a few words:</label>
+            <input type="text" id="traits" name="traits" placeholder="e.g., funny, kind, mysterious..." required>
+
+            <button type="submit" class="btn">Generate Love Letter 💖</button>
+        </form>
+
+        <p class="loading-text" id="loadingText">Writing your letter... 💕</p>
+
+        <div id="letterBox" class="letter-box">
+            <h2>💌 Your Love Letter</h2>
+            <p id="letterText"></p>
+            <button class="btn" onclick="downloadLetter()">Download as PDF 📜</button>
+        </div>
+
+        <a href="/features" class="btn">⬅ Back to Features</a>
+    </div>
+
+    <script>
+        document.getElementById("letterForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            let yourName = document.getElementById("yourName").value.trim();
+            let crushName = document.getElementById("crushName").value.trim();
+            let traits = document.getElementById("traits").value.trim();
+            let letterText = document.getElementById("letterText");
+            let letterBox = document.getElementById("letterBox");
+            let loadingText = document.getElementById("loadingText");
+
+            if (!yourName || !crushName || !traits) {
+                alert("Please enter all details! 💕");
+                return;
+            }
+
+            // Show loading text
+            loadingText.style.display = "block";
+            letterBox.style.display = "none";
+
+            // Send data to backend
+            let response = await fetch("/generate_letter", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ yourName, crushName, traits })
+            });
+
+            let data = await response.json();
+
+            // Hide loading text and display the letter
+            loadingText.style.display = "none";
+            letterText.innerText = data.letter;
+            letterBox.style.display = "block";
+
+            // Floating hearts effect
+            for (let i = 0; i < 10; i++) {
+                let heart = document.createElement("div");
+                heart.innerHTML = "❤️";
+                heart.classList.add("floating-heart");
+                document.body.appendChild(heart);
+
+                heart.style.left = Math.random() * window.innerWidth + "px";
+                heart.style.top = Math.random() * window.innerHeight + "px";
+                heart.style.animationDuration = Math.random() * 2 + 1 + "s";
+
+                setTimeout(() => heart.remove(), 2000);
+            }
+        });
+
+        function downloadLetter() {
+            let text = document.getElementById("letterText").innerText;
+            let blob = new Blob([text], { type: "text/plain" });
+            let link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "love_letter.txt";
+            link.click();
+        }
+    </script>
+
+</body>
+</html>

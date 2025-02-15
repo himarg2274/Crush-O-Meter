@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What to Respond? 💬💕</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            text-align: center;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff4081;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        label {
+            font-weight: bold;
+            color: #fff;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ff4081;
+            border-radius: 8px;
+            outline: none;
+            transition: 0.3s;
+            margin-bottom: 15px;
+            resize: none;
+        }
+
+        textarea:focus {
+            border-color: #ff669a;
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+        }
+
+        .btn {
+            background: #ff4081;
+            color: #fff;
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: #e91e63;
+            transform: scale(1.05);
+        }
+
+        .response-box {
+            display: none;
+            background: #ffe6eb;
+            color: #ff4081;
+            font-size: 18px;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-family: 'Dancing Script', cursive;
+            text-align: left;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .loading-text {
+            display: none;
+            font-size: 20px;
+            color: #ff4081;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="title">💌 What to Respond? 💬</h1>
+        <p class="subtitle">Keep the conversation going smoothly with AI-generated responses! 💕</p>
+
+        <form id="respondForm">
+            <label for="crushMessage">Your Crush's Last Message:</label>
+            <textarea id="crushMessage" name="crushMessage" placeholder="Type their last message here..." rows="3" required></textarea>
+
+            <button type="submit" class="btn">Generate Response 💖</button>
+        </form>
+
+        <p class="loading-text" id="loadingText">Thinking of the perfect reply... 😏💭</p>
+
+        <div id="responseBox" class="response-box">
+            <h2>💬 Suggested Reply:</h2>
+            <p id="responseText"></p>
+        </div>
+
+        <a href="/features" class="btn">⬅ Back to Features</a>
+    </div>
+
+    <script>
+        document.getElementById("respondForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            let crushMessage = document.getElementById("crushMessage").value.trim();
+            let responseText = document.getElementById("responseText");
+            let responseBox = document.getElementById("responseBox");
+            let loadingText = document.getElementById("loadingText");
+
+            if (!crushMessage) {
+                alert("Please enter your crush's last message! 💕");
+                return;
+            }
+
+            loadingText.style.display = "block";
+            responseBox.style.display = "none";
+
+            let response = await fetch("/generate_response", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ crushMessage })
+            });
+
+            let data = await response.json();
+
+            loadingText.style.display = "none";
+            responseText.innerText = data.response;
+            responseBox.style.display = "block";
+        });
+    </script>
+
+</body>
+</html>

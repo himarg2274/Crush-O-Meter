@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Poem Generator 💕</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        body {
+            background: linear-gradient(to bottom, #ffdde1, #ee9ca7);
+            font-family: 'Quicksand', sans-serif;
+            text-align: center;
+            padding: 20px;
+            color: #4a2c2a;
+        }
+
+        .container {
+            background: #fff0f3;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            margin: auto;
+        }
+
+        .title {
+            font-size: 28px;
+            color: #d63384;
+            font-weight: bold;
+            text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #6c757d;
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: 600;
+            color: #4a2c2a;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #f8a5c2;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            background: #ff6b81;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        button:hover {
+            background: #ff4081;
+            transform: scale(1.05);
+        }
+
+        #poemResult {
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            display: none;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #ff4081;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .back-button:hover {
+            color: #ff4081;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">💖 AI Love Poem Generator 💖</h1>
+        <p class="subtitle">Describe your crush, and let AI create a beautiful poem! ✨</p>
+        
+        <form id="poemForm">
+            <label for="crushName">Crush's Name:</label>
+            <input type="text" id="crushName" name="crushName" placeholder="Enter their name..." required>
+            
+            <label for="traits">Describe them in a few words:</label>
+            <input type="text" id="traits" name="traits" placeholder="e.g., funny, kind, mysterious..." required>
+            
+            <button type="submit">Generate Poem 💌</button>
+        </form>
+
+        <div id="poemResult">
+            <h2>Your Love Poem ✨</h2>
+            <p id="poemText"></p>
+        </div>
+
+        <a href="/features" class="back-button">⬅ Back to Features</a>
+    </div>
+
+    <script>
+        document.getElementById("poemForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            let crushName = document.getElementById("crushName").value.trim();
+            let traits = document.getElementById("traits").value.trim();
+            let poemText = document.getElementById("poemText");
+            let poemResult = document.getElementById("poemResult");
+
+            if (!crushName || !traits) {
+                alert("Please enter both name and traits!");
+                return;
+            }
+
+            // Send data to backend
+            let response = await fetch("/generate_poem", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ crushName, traits })
+            });
+
+            let data = await response.json();
+            poemText.innerHTML = data.poem ? `<pre>${data.poem}</pre>` : "AI couldn't generate a poem. Try a different theme!";
+            poemResult.style.display = "block";
+        });
+    </script>
+</body>
+</html>

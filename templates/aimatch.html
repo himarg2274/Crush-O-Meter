@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Match Percentage | Love-O-Tron 3000</title>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            text-align: center;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            background: #fff;
+            color: #333;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .title {
+            font-size: 26px;
+            font-weight: bold;
+            color: #ff4081;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        .match-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .input-container {
+            width: 100%;
+            text-align: left;
+        }
+
+        label {
+            font-weight: bold;
+            color: #ff4081;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ff4081;
+            border-radius: 8px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #ff669a;
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+        }
+
+        .btn {
+            background: #ff4081;
+            color: #fff;
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: #e91e63;
+            transform: scale(1.05);
+        }
+
+        .result-box {
+    background: #ffe6eb;
+    color: #ff4081;
+    font-size: 22px;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 15px;
+    font-weight: bold;
+    display: none; /* Initially hidden */
+    animation: heartbeat 1s infinite alternate;
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.1); }
+}
+
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 15px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            background: #ff4081;
+            padding: 8px 15px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #e91e63;
+            transform: scale(1.05);
+        }
+        /* Style for floating hearts */
+.heart {
+    position: fixed;
+    bottom: 0;
+    font-size: 24px;
+    color: red;
+    animation: floatUp ease-in-out;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) scale(1.5);
+        opacity: 0;
+    }
+}
+/* Love Quote Styling */
+.quote-box {
+    margin-top: 20px;
+    padding: 15px;
+    text-align: center;
+    font-size: 22px; /* Bigger font size */
+    font-weight: bold;
+    border-radius: 10px;
+    display: none; /* Hidden initially */
+    transition: 0.5s ease-in-out;
+}
+
+/* Color themes based on love percentage */
+.quote-high { background: #ff4081; color: #fff; } /* 90%+ */
+.quote-good { background: #ff85a2; color: #fff; } /* 80%+ */
+.quote-mid { background: #ffb6c1; color: #6a0572; } /* 70%+ */
+.quote-low { background: #ffe6eb; color: #ff4081; } /* 55-69% */
+
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="title">❤️ Name Match Percentage ❤️</h1>
+        <p class="subtitle">Find out your name match score!</p>
+
+        <div class="match-box">
+            <div class="input-container">
+                <label for="name1">Your Name:</label>
+                <input type="text" id="name1" required placeholder="Enter your name...">
+            </div>
+
+            <div class="input-container">
+                <label for="name2">Your Crush's Name:</label>
+                <input type="text" id="name2" required placeholder="Enter crush's name...">
+            </div>
+
+            <button class="btn" onclick="calculateMatch()">Calculate Match 💘</button>
+            
+            <div class="result-box" id="result-box">
+                <h2>💖 Your Match Score: <span id="match-result">??%</span>💖</h2>
+            </div>
+        </div>
+        <div class="quote-box" id="quote-box" style="display: none;">
+            <p id="cringe-quote"></p>
+        </div>
+        
+        
+        <a href="/features" class="back-btn">⬅️ Back to Features</a>
+    </div>
+<script>
+   function calculateMatch() {
+    let name1 = document.getElementById("name1").value.trim();
+    let name2 = document.getElementById("name2").value.trim();
+    let resultBox = document.getElementById("result-box");
+    let resultText = document.getElementById("match-result");
+    let quoteBox = document.getElementById("quote-box");
+    let cringeQuoteText = document.getElementById("cringe-quote");
+
+    if (name1 === "" || name2 === "") {
+        alert("Please enter both names! 💕");
+        return;
+    }
+
+    // Vowel-based AI match logic
+    let vowels = "aeiouAEIOU";
+    let count = 0;
+
+    for (let char of name1 + name2) {
+        if (vowels.includes(char)) {
+            count++;
+        }
+    }
+
+    let matchScore = Math.min(count * 10, 100);
+    matchScore = Math.max(70, matchScore); // Ensures percentage is always above 70%
+
+    // Show result box
+    resultBox.style.display = "block";
+    resultText.innerText = "0%";
+    quoteBox.style.display = "none"; // Hide quote initially
+    quoteBox.className = "quote-box"; // Reset classes
+
+    let currentNumber = 1;
+    let interval = setInterval(() => {
+        if (currentNumber <= matchScore) {
+            resultText.innerText = currentNumber + "%";
+            createHeart();
+            currentNumber++;
+        } else {
+            clearInterval(interval);
+            let cringeQuote = generateCringeQuote(matchScore, name1, name2);
+            cringeQuoteText.innerText = `"${cringeQuote}"`;
+
+            // Change color based on match percentage
+            if (matchScore >= 90) {
+                quoteBox.classList.add("quote-high");
+            } else if (matchScore >= 80) {
+                quoteBox.classList.add("quote-good");
+            } else if (matchScore >= 70) {
+                quoteBox.classList.add("quote-mid");
+            } else {
+                quoteBox.classList.add("quote-low");
+            }
+
+            quoteBox.style.display = "block"; // Show quote after match calculation
+        }
+    }, 30);
+}
+
+// Function to generate floating hearts
+function createHeart() {
+    let heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+    document.body.appendChild(heart);
+
+    let x = Math.random() * window.innerWidth;
+    let duration = Math.random() * 2 + 1;
+
+    heart.style.left = `${x}px`;
+    heart.style.animationDuration = `${duration}s`;
+
+    setTimeout(() => {
+        heart.remove();
+    }, duration * 1000);
+}
+
+// Function to generate a cringey love quote
+function generateCringeQuote(score, name1, name2) {
+    if (score >= 90) {
+        return `${name1} and ${name2}, your love is like Wi-Fi — a strong connection that never drops! 💘📡`;
+    } else if (score >= 80) {
+        return `${name1}, if loving ${name2} was a job, you'd be the CEO! 💼💖`;
+    } else if (score >= 70) {
+        return `${name1} and ${name2}, your love is like a pineapple pizza — weird but perfect! 🍍🍕💞`;
+    } else {
+        return `${name1}, your love for ${name2} is like a buffering video… but it will load eventually! ⏳💕`;
+    }
+}
+
+
+</script>
+
+</body>
+</html>
