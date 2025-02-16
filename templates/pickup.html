@@ -6,6 +6,8 @@
     <title>Cringe Pickup Line Generator 🤡💕</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
         body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #ff758c, #ff7eb3);
@@ -13,58 +15,53 @@
             color: #fff;
             margin: 0;
             padding: 0;
+            overflow: hidden;
         }
 
         .container {
             max-width: 500px;
-            margin: 50px auto;
+            margin: 60px auto;
             background: #fff;
             color: #333;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
             position: relative;
             overflow: hidden;
         }
 
-        .container::before {
-            content: "💕";
-            font-size: 100px;
-            color: rgba(255, 120, 180, 0.2);
-            position: absolute;
-            top: -20px;
-            right: -20px;
-            transform: rotate(-15deg);
-        }
-
         .title {
-            font-size: 26px;
+            font-size: 28px;
             font-weight: bold;
             color: #ff4081;
             margin-bottom: 10px;
         }
 
         .subtitle {
-            font-size: 18px;
-            margin-bottom: 20px;
+            font-size: 16px;
             color: #666;
+            margin-bottom: 20px;
         }
 
         .btn {
-            background: #ff4081;
+            background: linear-gradient(135deg, #ff5e92, #ff4081);
             color: #fff;
             font-size: 18px;
-            padding: 12px 25px;
+            padding: 12px 30px;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             transition: 0.3s ease-in-out;
             display: inline-block;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
         }
 
         .btn:hover {
-            background: #e91e63;
-            transform: scale(1.07);
+            background: linear-gradient(135deg, #e91e63, #ff4081);
+            transform: scale(1.08);
+            box-shadow: 0 5px 15px rgba(255, 64, 129, 0.4);
         }
 
         .line-box {
@@ -74,9 +71,9 @@
             font-size: 22px;
             font-weight: bold;
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 15px;
             margin-top: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
             animation: fadeIn 0.5s ease-in-out;
         }
 
@@ -97,6 +94,29 @@
             margin-bottom: 10px;
         }
 
+        .back-btn {
+            background: #ffccdc;
+            color: #ff4081;
+            margin-top: 15px;
+        }
+
+        .back-btn:hover {
+            background: #ffb6c9;
+        }
+
+        /* Floating Hearts */
+        .heart {
+            position: absolute;
+            color: #ff4081;
+            font-size: 20px;
+            animation: floatUp 4s ease-in-out infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -112,7 +132,7 @@
             <p id="pickupLine"></p>
         </div>
 
-        <a href="/features" class="btn">⬅ Back to Features</a>
+        <a href="/features" class="btn back-btn">⬅ Back to Features</a>
     </div>
 
     <script>
@@ -127,7 +147,24 @@
             // Show pickup line
             pickupLine.innerText = data.line;
             lineBox.style.display = "block";
+
+            // Create floating hearts
+            for (let i = 0; i < 5; i++) {
+                createHeart();
+            }
         });
+
+        function createHeart() {
+            const heart = document.createElement("div");
+            const hearts = ["❤️", "💖", "💕", "💗", "💓", "💝"];
+            heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+            heart.classList.add("heart");
+            heart.style.left = Math.random() * window.innerWidth + "px";
+            heart.style.fontSize = Math.random() * 15 + 15 + "px";
+            document.body.appendChild(heart);
+
+            setTimeout(() => heart.remove(), 4000);
+        }
     </script>
 
 </body>
