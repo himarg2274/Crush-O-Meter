@@ -254,86 +254,102 @@
     </div>
 
     <script>
-        function calculateMatch() {
-            let name1 = document.getElementById("name1").value.trim();
-            let name2 = document.getElementById("name2").value.trim();
-            let resultBox = document.getElementById("result-box");
-            let resultText = document.getElementById("match-result");
-            let quoteBox = document.getElementById("quote-box");
-            let cringeQuoteText = document.getElementById("cringe-quote");
+       function calculateMatch() {
+    let name1 = document.getElementById("name1").value.trim();
+    let name2 = document.getElementById("name2").value.trim();
+    let resultBox = document.getElementById("result-box");
+    let resultText = document.getElementById("match-result");
+    let quoteBox = document.getElementById("quote-box");
+    let cringeQuoteText = document.getElementById("cringe-quote");
 
-            if (name1 === "" || name2 === "") {
-                alert("Please enter both names! 💕");
-                return;
-            }
+    if (name1 === "" || name2 === "") {
+        alert("Please enter both names! 💕");
+        return;
+    }
 
-            // Vowel-based AI match logic
-            let vowels = "aeiouAEIOU";
-            let count = 0;
+    // Vowel-based AI match logic
+    let vowels = "aeiouAEIOU";
+    let count = 0;
 
-            for (let char of name1 + name2) {
-                if (vowels.includes(char)) {
-                    count++;
-                }
-            }
-
-            let matchScore = Math.min(count * 10, 100);
-            matchScore = Math.max(70, matchScore); // Ensures percentage is always above 70%
-
-            resultBox.style.display = "block";
-            resultText.innerText = "0%";
-            quoteBox.style.display = "none";
-            quoteBox.className = "quote-box";
-
-            let currentNumber = 1;
-            let interval = setInterval(() => {
-                if (currentNumber <= matchScore) {
-                    resultText.innerText = currentNumber + "%";
-                    createHeart();
-                    currentNumber++;
-                } else {
-                    clearInterval(interval);
-                    let cringeQuote = generateCringeQuote(matchScore, name1, name2);
-                    cringeQuoteText.innerText = `"${cringeQuote}"`;
-
-                    if (matchScore >= 90) {
-                        quoteBox.classList.add("quote-high");
-                    } else if (matchScore >= 80) {
-                        quoteBox.classList.add("quote-good");
-                    } else if (matchScore >= 70) {
-                        quoteBox.classList.add("quote-mid");
-                    } else {
-                        quoteBox.classList.add("quote-low");
-                    }
-
-                    quoteBox.style.display = "block";
-                }
-            }, 30);
+    for (let char of name1 + name2) {
+        if (vowels.includes(char)) {
+            count++;
         }
+    }
 
-        function createHeart() {
-            const heart = document.createElement("div");
-            const hearts = ["❤️", "💖", "💕", "💗", "💓", "💝"];
-            heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
-            heart.classList.add("heart");
-            heart.style.left = Math.random() * window.innerWidth + "px";
-            heart.style.transform = `scale(${Math.random() * 0.5 + 0.5})`;
-            document.body.appendChild(heart);
-            
-            setTimeout(() => heart.remove(), 4000);
-        }
+    let matchScore = Math.min(count * 10, 100);
+    matchScore = Math.max(20, matchScore); // Ensures percentage is always above 20%
 
-        function generateCringeQuote(score, name1, name2) {
-            if (score >= 90) {
-                return `${name1} and ${name2}, your love is like Wi-Fi — a strong connection that never drops! 💘📡`;
-            } else if (score >= 80) {
-                return `${name1}, if loving ${name2} was a job, you'd be the CEO! 💼💖`;
-            } else if (score >= 70) {
-                return `${name1} and ${name2}, your love is like a pineapple pizza — weird but perfect! 🍍🍕💞`;
+    resultBox.style.display = "block";
+    resultText.innerText = "0%";
+    quoteBox.style.display = "none";
+    quoteBox.className = "quote-box";
+
+    let currentNumber = 1;
+    let interval = setInterval(() => {
+        if (currentNumber <= matchScore) {
+            resultText.innerText = currentNumber + "%";
+            createHeart();
+            currentNumber++;
+        } else {
+            clearInterval(interval);
+            let cringeQuote = generateCringeQuote(matchScore, name1, name2);
+            cringeQuoteText.innerText = `"${cringeQuote}"`;
+
+            if (matchScore >= 90) {
+                quoteBox.classList.add("quote-high");
+            } else if (matchScore >= 80) {
+                quoteBox.classList.add("quote-good");
+            } else if (matchScore >= 70) {
+                quoteBox.classList.add("quote-mid");
             } else {
-                return `${name1}, your love for ${name2} is like a buffering video… but it will load eventually! ⏳💕`;
+                quoteBox.classList.add("quote-low");
             }
+
+            quoteBox.style.display = "block";
         }
+    }, 30);
+}
+
+function createHeart() {
+    const heart = document.createElement("div");
+    const hearts = ["❤️", "💖", "💕", "💗", "💓", "💝"];
+    heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+    heart.classList.add("heart");
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    heart.style.transform = `scale(${Math.random() * 0.5 + 0.5})`;
+    document.body.appendChild(heart);
+    
+    setTimeout(() => heart.remove(), 4000);
+}
+
+function generateCringeQuote(score, name1, name2) {
+    const quotes = [
+        `${name1} and ${name2}, your love is like Wi-Fi — a strong connection that never drops! 💘📡`,
+        `${name1}, if loving ${name2} was a job, you'd be the CEO! 💼💖`,
+        `${name1} and ${name2}, your love is like a pineapple pizza — weird but perfect! 🍍🍕💞`,
+        `${name1}, your love for ${name2} is like a buffering video… but it will load eventually! ⏳💕`,
+        `Even Google can’t find a better match than ${name1} and ${name2}! 🔍❤️`,
+        `${name1} and ${name2}, you're the reason "love at first sight" is still a thing! 😍`,
+        `${name1}, if ${name2} were a song, you’d be stuck on repeat! 🎶💘`,
+        `${name1}, your love for ${name2} is like a never-ending WhatsApp forward—cringy but addictive! 📲💞`,
+        `${name1}, if you were a TikTok trend, ${name2} would never scroll past you! 🎵💖`,
+        `${name1} and ${name2}, even the stars ship you! ✨🚢`,
+        `${name1}, if love was an exam, you and ${name2} just scored 100%—without cheating! 📚💞`,
+        `${name1} and ${name2}, your love is like a double-tap on Instagram—meant to be! 💕👍`,
+        `${name1}, if ${name2} was a coffee, you'd be the perfect sugar to balance the bitterness! ☕💖`,
+        `${name1} and ${name2}, your love is stronger than my WiFi signal! 📶❤️`,
+        `Roses are red, violets are blue, ${name1} and ${name2}, no couple is cuter than you! 🌹💘`,
+        `${name1}, if ${name2} was a book, you’d never skip a page! 📖💖`,
+        `Scientists just discovered a new love chemical—it's called ${name1} + ${name2}! 🧪💞`,
+        `${name1} and ${name2}, even Netflix knows you’re a perfect match! 🍿💖`,
+        `${name1}, if love was a movie, you and ${name2} would be the ultimate rom-com! 🎬💕`,
+        `${name1} and ${name2}, your love is sweeter than all the Valentine's Day chocolates combined! 🍫💘`
+    ];
+
+    return quotes[Math.floor(Math.random() * quotes.length)];
+}
+
     </script>
 </body>
 </html>
