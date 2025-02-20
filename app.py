@@ -103,24 +103,22 @@ def generate_letter():
         return jsonify({"error": str(e)}), 500
 
 
+PICKUP_LINES = [
+    "Are you a magician? Because whenever I look at you, everyone else disappears. ✨",
+    "Are you a WiFi signal? Because I'm feeling a strong connection! 📶",
+    "Are you an exam? Because I’ve been studying you all night. 📚❤️",
+    "Do you have a Band-Aid? Because I just scraped my knee falling for you. 😍",
+    "Are you made of copper and tellurium? Because you're Cu-Te. 🔬",
+    "Are you a keyboard? Because you're just my type. ⌨️💕",
+    "I must be a snowflake because I've fallen for you. ❄️💘",
+    "Can you lend me a map? I keep getting lost in your eyes. 🗺️👀",
+    "Are you a light bulb? Because you brighten up my day. 💡😊",
+]
+
 @app.route('/generate_pickup', methods=['GET'])
 def generate_pickup():
-    try:
-        # Generate a cringe pickup line using Gemini AI
-        model = genai.GenerativeModel("gemini-1.5-flash")
-        prompt = "Give me a ridiculously cringe but funny pickup line."
-
-        response = model.generate_content(prompt)
-
-        # Ensure response is valid
-        if not response or not hasattr(response, "text") or not response.text:
-            return jsonify({"error": "Failed to generate pickup line"}), 500
-
-        return jsonify({"line": response.text.strip()})
-
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
+    return jsonify({"line": random.choice(PICKUP_LINES)})
+    
 @app.route('/chat_partner_bot', methods=['POST'])
 def chat_partner_bot():
     try:
